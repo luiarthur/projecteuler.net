@@ -16,6 +16,7 @@ def largestPrime(n: Long): Long = {
   loop(n).toLong
 }
 
+
 // Alternatively:
 def simpleLargestPrime(x: Long, divisor: Long = 2): Long = 
   if (x > 1) {
@@ -23,7 +24,8 @@ def simpleLargestPrime(x: Long, divisor: Long = 2): Long =
     else simpleLargestPrime(x, divisor + 1)
   } else divisor
 
-val x = 600851475143L
 
+// Run:
+val x = 600851475143L
 largestPrime(x)
-simpleLargestPrime(2)
+simpleLargestPrime(x)
