@@ -30,3 +30,4 @@ def simpleLargestPrime(x: Long, divisor: Long = 2): Long =
 val x = 600851475143L
 largestPrime(x)
 simpleLargestPrime(x)
+// 6857
