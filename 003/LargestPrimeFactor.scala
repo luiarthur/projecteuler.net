@@ -3,18 +3,27 @@
  * What is the largest prime factor of the number 600851475143 ?
  */
 
-import scala.math.{sqrt,round}
+import scala.math.sqrt
 
-def largestPrime(n: Double): Double = {
-  def isPrime(n: Double): Boolean = (2 to sqrt(n).toInt).forall( n % _ > 0 )
-  def isFactor(n: Double, x: Double) = n % x == 0
-  def isPrimeFactor(n: Double, x: Double) = isFactor(n,x) && isPrime(x)
+def largestPrime(n: Long): Long = {
+  def isPrime(n: Long): Boolean = (2 to sqrt(n).toInt).forall( n % _ > 0 )
+  def isFactor(n: Long, x: Long) = n % x == 0
+  def isPrimeFactor(n: Long, x: Long) = isFactor(n,x) && isPrime(x)
   
-  def loop(d: Double): Double = 
-    if ( isPrimeFactor(n, d) ) d else loop(n, if (d==n) sqrt(n) else d-1)
+  def loop(d: Long): Long = 
+    if ( isPrimeFactor(n, d) ) d else loop(if (d==n) sqrt(n).toLong else d-1)
 
-  loop(n)
+  loop(n).toLong
 }
 
-largestPrime(13195)
-largestPrime(600851475143.0)
+// Alternatively:
+def simpleLargestPrime(x: Long, divisor: Long = 2): Long = 
+  if (x > 1) {
+    if (x % divisor == 0) simpleLargestPrime(x / divisor, divisor)
+    else simpleLargestPrime(x, divisor + 1)
+  } else divisor
+
+val x = 600851475143L
+
+largestPrime(x)
+simpleLargestPrime(2)
