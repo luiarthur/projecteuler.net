@@ -8,7 +8,7 @@
 def sumOfMult(a: Int, b: Int, n: Int): Int = 
   (1 to n-1).filter( x => x % a == 0 || x % b == 0).sum
 
-sumOfMult(3,5,1000)
+sumOfMult(3,5,1000) // 233168
 
 /** Alternatively,
  * (1 to n-1).filter.par( x => x % a == 0 || x % b == 0).sum
