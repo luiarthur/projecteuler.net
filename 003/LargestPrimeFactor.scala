@@ -10,8 +10,9 @@ def largestPrime(n: Long): Long = {
   def isFactor(n: Long, x: Long) = n % x == 0
   def isPrimeFactor(n: Long, x: Long) = isFactor(n,x) && isPrime(x)
   
-  def loop(d: Long): Long = 
+  def loop(d: Long): Long = {
     if ( isPrimeFactor(n, d) ) d else loop(if (d==n) sqrt(n).toLong else d-1)
+  }
 
   loop(n).toLong
 }
