@@ -17,7 +17,7 @@ def leastMultiple(n: Int): Int = {
     if ( g == 1 ) a*b*c else lcm(a/g, b/g, g)
   }
 
-  (1 to n).foldLeft(1)(lcm(_,_)) 
+  (1 to n).reduce(lcm(_,_)) 
 }
 
 leastMultiple(20) // 232792560
