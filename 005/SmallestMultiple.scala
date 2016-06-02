@@ -4,6 +4,7 @@
  *  that is evenly divisible by all of the numbers from 1 to 20?
  */
 
+// Why?
 def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
 
 def lcm(a: Int, b: Int, c: Int = 1): Int = {
