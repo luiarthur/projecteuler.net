@@ -4,17 +4,20 @@
  *  that is evenly divisible by all of the numbers from 1 to 20?
  */
 
-// Why?
-def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
-
-def lcm(a: Int, b: Int, c: Int = 1): Int = {
-  val g = gcd(a,b)
-  if ( g == 1 ) a*b*c else lcm(a/g, b/g, g)
-}
+/** *foldLeft(1) means the base should be 1. 
+ * With scala >=  2.9. Using fold instead of foldLeft / foldRight does not 
+ * process data in any particular order. Preferred for List.par, Array.par, etc.
+ */
 
 def leastMultiple(n: Int): Int = {
-  (1 to n).foldLeft(0)((x,y) => lcm(x,y))
+  def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
+
+  def lcm(a: Int, b: Int, c: Int = 1): Int = {
+    val g = gcd(a,b)
+    if ( g == 1 ) a*b*c else lcm(a/g, b/g, g)
+  }
+
+  (1 to n).foldLeft(1)(lcm(_,_)) 
 }
 
-leastMultiple(10) // ?
-
+leastMultiple(20) // 232792560
