@@ -11,7 +11,6 @@
 
 def leastMultiple(n: Int): Int = {
   def gcd(a: Int, b: Int): Int = if (b==0) a else gcd(b, a%b)
-
   def lcm(a: Int, b: Int, c: Int = 1): Int = {
     val g = gcd(a,b)
     if ( g == 1 ) a*b*c else lcm(a/g, b/g, g)
