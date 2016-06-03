@@ -24,3 +24,12 @@ def nthPrime(n: Int): Int = {
   loop(1,0)
 }
 nthPrime(10001) // 104743
+
+/** Don't know why this breaks 
+
+  def from(n: Int): Stream[Int] = n #:: from(n+1)
+  def sieve(s: Stream[Int]): Stream[Int] = 
+    s.head #:: sieve(s.tail filter(_ % s.head != 0))
+  val primes = sieve(from(2))
+  primes.take(3000).toList.reverse.head
+*/
