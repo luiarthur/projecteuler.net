@@ -18,7 +18,7 @@ def largestPrime(n: Long): Long = {
 }
 
 
-// Alternatively:
+// Alternatively (more elegant but slower for large numbers):
 def simpleLargestPrime(x: Long, divisor: Long = 2): Long = 
   if (x > 1) {
     if (x % divisor == 0) simpleLargestPrime(x / divisor, divisor)

@@ -1,0 +1,2 @@
+005 - Euclid's Algorithm
+100 - Diophantine Equation
