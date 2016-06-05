@@ -9,21 +9,39 @@
  *  thirty-five red discs.
  *
  *  By finding the first arrangement to contain over 10^12 = 1,000,000,000,000
- *  discs in total, determine the number of blue discs that the box would
+ *  discs in total, determine the number of blue dsscs that the box would
  *  contain.
  **/
 
-def findNumber(n: Long): (Long,Long) = {
-  def pass(n: Long, b: Long): Boolean = b.toDouble / n * (b-1).toDouble / (n-1) == .5
-  def loop(n: Long, b: Long): (Long,Long) = {
-    //def pass(n: Long, b: Long): Boolean = new Rational(b,n) * new Rational (b-1,n-1) == new Rational(1,2)
+/* Too Long 
+def findNumber(n: Long): (BigInt,BigInt) = {
+  val sqrtHalf = math.sqrt(.5)
+  def pass(n: BigInt, b: BigInt): Boolean = 
+    (n * (n-1)) % (b * (b-1)) == 0 && n * (n-1) / b / (b-1) == 2 
+  def loop(n: BigInt, b: BigInt): (BigInt,BigInt) = {
     if (pass(n,b)) (n,b)
-    else if (b/n.toDouble < .5) loop(n+1,n+1)
+    else if (b.toDouble/n.toDouble < sqrtHalf) {
+      val next: BigInt = ((n.toLong+1)*math.sqrt(.5)+1).toLong
+      loop(n+1,next)
+    }
     else loop(n,b-1)
   }
-  loop(n,n)  
+  val N: BigInt = (sqrtHalf*n+2).toLong
+  loop(n,N)
+}
+// The key is that b / n tends to sqrt(1/2). But this is too slow...
+*/
+
+// Diophantine Equation
+// https://www.alpertron.com.ar/QUAD.HTM
+def findNumber(N: Long): (Long, Long) = {
+  def loop(n: Long, b: Long): (Long,Long) = {
+    if (n<N) loop(4*b+3*n-3, 3*b+2*n-2)
+    else (n,b)
+  }
+  loop(4,3)
 }
 
+findNumber(1)
 findNumber(10)
-findNumber(100000)
-findNumber(10E11.toLong)
+findNumber(1000000000000L) // (1070379110497, 756872327473)
