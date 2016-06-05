@@ -13,32 +13,6 @@
  *  contain.
  **/
 
-class Rational (n: Long, d: Long) {
-  require(d != 0)
-  def gcd(a: Long, b: Long): Long = if (b==0) a else gcd(b, a%b) // Euclid's Algorithm
-  private val g = gcd(n,d)
-  val numer = n / g
-  val denom = d / g
-  override def toString = numer + "/" + denom
-  def times(that: Rational): Rational = { 
-    val g1 = gcd(this.numer,that.denom)
-    val g2 = gcd(that.numer,this.denom)
-    new Rational(this.numer / g1 * that .numer / g2, that.denom / g1 * this.denom / g2)
-  }
-  def * (that: Rational): Rational = times(that)
-  def == (that: Rational): Boolean = this.numer == that.numer && this.denom == that.denom
-}
-
-/*
-val x = new Rational(4,3)
-val y = new Rational(3,2)
-val z = new Rational(6,4)
-y * x
-y == x
-y == z
-new Rational(4,8) == new Rational(1,2)
-*/
-
 def findNumber(n: Long): (Long,Long) = {
   def pass(n: Long, b: Long): Boolean = b.toDouble / n * (b-1).toDouble / (n-1) == .5
   def loop(n: Long, b: Long): (Long,Long) = {
