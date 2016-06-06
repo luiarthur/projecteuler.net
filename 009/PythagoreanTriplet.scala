@@ -8,12 +8,10 @@
  *  Find the product abc.
  */
 
+// a+b>c  => 1000=a+b+c>2c => c<500 => a<500 & b<500
 def pythTriplet(n: Int): Int = {
-  val mx = n / 2 // a+b>c  => 1000=a+b+c>2c => c<500 => a<500 & b<500
-  val ls = for (a <- 1 to mx; b <- 1 to mx; c <- 1 to mx; 
-    if (a+b+c == n && a*a + b*b == c*c) )
-   yield a*b*c
-  ls.toSet.head
+  {for (c <- 1 to n/2; b <- 1 to c; if (b+c+math.sqrt(c*c-b*b)==1000)) 
+    yield b*c*math.sqrt(c*c-b*b).toInt}.head
 }
 
-pythTriplet(1000)
+pythTriplet(1000) // 31857000
