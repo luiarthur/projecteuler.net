@@ -27,7 +27,7 @@
  *  What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
  */
 
-val x = """
+val a = """
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -48,4 +48,25 @@ val x = """
 20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
-""".split("\n").map(_.split(" ")).tail
+""".split("\n").map(_.split(" ")).tail.map(z => z.map(_.toInt))
+
+def findMaxProd(a: Array[Array[Int]], len: Int = 4): Int = {
+  val n = a.length
+  val k = a(0).length
+  val dirs = List( (0,1), (1,0), (1,1), (-1,1))
+
+  def loop(loc: (Int,Int), dir: (Int,Int), stepsRemaining: Int, acc: Int): Int = {
+    def inBounds( loc: (Int,Int) ): Boolean = loc._1 < n && loc._2 < k && loc._1 >= 0 && loc._2 >= 0
+    if (inBounds(loc)) {
+      if (stepsRemaining == 0) acc else {
+        val (x,y) = (loc._1 + dir._1, loc._2 + dir._2)
+        loop((x,y), dir, stepsRemaining-1, a(loc._1)(loc._2) * acc)
+      }
+    } else if (stepsRemaining == 0) acc else 0
+  }
+  
+  val prods = for (i <- 0 until n; j <- 0 until k; d <- dirs) yield loop((i,j), d, len, 1)
+  prods.max
+}
+
+findMaxProd(a=a, len=4) // 70600674
