@@ -20,12 +20,21 @@
 def longestColatz(n: Int): Int = {
   def next(x: Int): Int = if (x % 2 == 0) x / 2 else 3*x + 1
 
-  def loop(n: Int, seqHead: Int, seqSize: Int = 1): (Int,Int) = {
-    if (n == 1) (seqHead, seqSize)
-    else loop(next(n), seqHead, seqSize+1)
+  def loop(n: Int, seq: List[Int] = List[Int]()): List[Int] = 
+    if (n == 1) 1 :: seq else loop(next(n), n :: seq)
+
+  def search(s: List[Int] = (n to 1 by -1).toList, longestSeq: List[Int] = List[Int]()): List[Int] = {
+    def innerSearch(n: Int, seq: List[Int] = List[Int]()): List[Int] = 
+      if (n == 1 || s contains n) 1 :: seq else (s contains n) innerSearch(next(n), n :: seq)
+
+    if (s.size == 0) longestSeq else {
+      val newSeq = innerSearch(s.head)
+      val newLongestSeq = if (longestSeq.size < newSeq.size) newSeq else longestSeq
+      search(s diff newSeq, newLongestSeq)
+    }
   }
 
-  (1 to n).toList.par.map(x => loop(x,x)).maxBy(_._2)._1
+  search().last
 }
 
-longestColatz(1000000)
+longestColatz(10)
