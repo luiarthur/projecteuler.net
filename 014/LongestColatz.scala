@@ -25,7 +25,7 @@ def longestColatz(n: Int): Int = {
     else loop(next(n), seqHead, seqSize+1)
   }
 
-  (1 to n).par.map(x => loop(x,x)).maxBy(_._2)
+  (1 to n).toList.par.map(x => loop(x,x)).maxBy(_._2)._1
 }
 
 longestColatz(1000000)
