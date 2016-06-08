@@ -23,18 +23,16 @@ def longestColatz(n: Int): Int = {
   def loop(n: Int, seq: List[Int] = List[Int]()): List[Int] = 
     if (n == 1) 1 :: seq else loop(next(n), n :: seq)
 
-  def search(s: List[Int] = (n to 1 by -1).toList, longestSeq: List[Int] = List[Int]()): List[Int] = {
-    def innerSearch(n: Int, seq: List[Int] = List[Int]()): List[Int] = 
-      if (n == 1 || s contains n) 1 :: seq else (s contains n) innerSearch(next(n), n :: seq)
-
-    if (s.size == 0) longestSeq else {
-      val newSeq = innerSearch(s.head)
+  def search(elemToSearch: List[Int] = (n to 1 by -1).toList, longestSeq: List[Int] = List[Int]()): List[Int] = {
+    if (elemToSearch.size == 0) longestSeq else {
+      print("\r"+elemToSearch.size)
+      val newSeq = loop(elemToSearch.head)
       val newLongestSeq = if (longestSeq.size < newSeq.size) newSeq else longestSeq
-      search(s diff newSeq, newLongestSeq)
+      search(elemToSearch diff newSeq, newLongestSeq)
     }
   }
 
-  search().last
+  search(util.Random.shuffle((n to 1 by -1).toList)).last
 }
 
-longestColatz(10)
+longestColatz(1000000)
