@@ -41,12 +41,19 @@ longestColatzSlow(10000)
  *    If the chain length has been computed, just use that again.
  */
 
-def next(x: Int): Int = if (x % 2 == 0) x / 2 else 3*x + 1
-def distFromEnd(x: Int, lengthOf: Map[Int,Int] = Map(1->1), acc: Int = 0, nxt: Int): Map[Int,Int] = {
-  if (lengthOf contains x) lengthOf else {
-    if (lengthOf contains nxt) distFromEnd(x, lengthOf + (x -> (acc+lengthOf(nxt))), 0, nxt) else {
-      distFromEnd(nxt, lengthOf, acc+1, next(nxt))
-    }
+def longestColatz(n: Int): Int = {
+  def next(x: Int): Int = if (x % 2 == 0) x / 2 else 3*x + 1
+  def distFromEnd(x: Int, lengthOf: Map[Int,Int] = Map(1->1), nxt: Int): Map[Int,Int] = {
+    if (x == 1) lengthOf
+    else if (lengthOf contains nxt) lengthOf + (x -> (lengthOf(nxt)+1))
+    else distFromEnd(x, lengthOf ++ distFromEnd(nxt,lengthOf,next(nxt)), next(x))
   }
+  def search(): Int = ???
 }
-distFromEnd(13,nxt=next(13))
+
+// 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+// 10    9    8    7   6    5   4   3   2   1
+//distFromEnd(1,nxt=next(1))
+//distFromEnd(13,nxt=next(13)) // size should be 10
+//distFromEnd(1000000,nxt=next(1000000)) // size should be 153
+//distFromEnd(333333,nxt=next(333333)) // size should be 153
