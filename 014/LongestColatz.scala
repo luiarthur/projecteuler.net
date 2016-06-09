@@ -48,7 +48,13 @@ def longestColatz(n: Int): Int = {
     else if (lengthOf contains nxt) lengthOf + (x -> (lengthOf(nxt)+1))
     else distFromEnd(x, lengthOf ++ distFromEnd(nxt,lengthOf,next(nxt)), next(x))
   }
-  def search(): Int = ???
+  def search(toSearch: List[Int], searched: Map[Int,Int] = Map(1->1), longestChain: Int = 1): Int = {
+    val newToSearch = toSearch diff search.keys.toList
+    val hd = toSearch.head
+    val newLongest if (toSearch(hd) > toSearch(longestChain)) hd else longestChain
+
+  }
+  search((n to 1 by -1).toList)
 }
 
 // 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
