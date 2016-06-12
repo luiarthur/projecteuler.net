@@ -41,6 +41,7 @@ longestColatzSlow(10000)
  *    If the chain length has been computed, just use that again.
  */
 
+// Incomplete...
 def longestColatz(n: Int): Int = {
   def next(x: Int): Int = if (x % 2 == 0) x / 2 else 3*x + 1
   def distFromEnd(x: Int, lengthOf: Map[Int,Int] = Map(1->1), nxt: Int): Map[Int,Int] = {
