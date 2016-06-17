@@ -42,6 +42,7 @@ longestColatzSlow(10000)
  */
 
 // Incomplete...
+// http://codereview.stackexchange.com/questions/26627/increasing-speed-of-project-euler-14-longest-collatz-sequence
 def longestColatz(n: Int): Int = {
   def next(x: Int): Int = if (x % 2 == 0) x / 2 else 3*x + 1
   def distFromEnd(x: Int, lengthOf: Map[Int,Int] = Map(1->1), nxt: Int): Map[Int,Int] = {
