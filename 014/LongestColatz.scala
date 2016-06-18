@@ -44,18 +44,18 @@ longestColatzSlow(10000)
 // Incomplete...
 // http://codereview.stackexchange.com/questions/26627/increasing-speed-of-project-euler-14-longest-collatz-sequence
 def longestColatz(n: Int): Int = {
-  //val lengthOf = Array[Int](n)
+  val lengthOf = new Array[Int](n+1)
+  lengthOf(1) = 1
   def next(x: Int): Int = if (x % 2 == 0) x / 2 else 3*x + 1
-  def distFromEnd(x: Int, lengthOf: Array[Int] = Array[Int](n), nxt: Int): Array[Int] = {
-    if (x == 1) lengthOf
-    else if (lengthOf contains nxt) lengthOf + (x -> (lengthOf(nxt)+1))
-    else distFromEnd(x, lengthOf ++ distFromEnd(nxt,lengthOf,next(nxt)), next(x))
+  def distFromEnd(x: Int, nxt: Int): Int = {
+    if (lengthOf(x) > 0) lengthOf(x)
+    else if (lengthOf(nxt) > 0) { lengthOf(x) = lengthOf(nxt) + 1; lengthOf(x)}
+    else distFromEnd(x, next(x))
   }
-  def search(toSearch: List[Int], searched: Map[Int,Int] = Map(1->1), longestChain: Int = 1): Int = {
+  def search(toSearch: List[Int], searched: Array[Int] = Array[Int](n), longestChain: Int = 1): Int = {
     val newToSearch = toSearch diff searched.keys.toList
     val hd = toSearch.head
     val newLongest if (toSearch(hd) > toSearch(longestChain)) hd else longestChain
-
   }
   search((n to 1 by -1).toList)
 }
